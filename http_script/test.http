@@ -1,0 +1,9 @@
+### 单页报告打印
+GET http://localhost:12307/typst/typst-to-pdf/template?
+    titleName=出厂测试报告
+
+
+### 多页循环标签打印
+GET http://localhost:12307/typst/typst-to-pdf/couplet-template?
+    dataBottom=10&
+    dataLeft=10

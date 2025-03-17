@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- scan="true" 开启自动扫描 scanPeriod="30 seconds" 设置自动扫描时间 30s一次 -->
+<!--<configuration scan="true" scanPeriod="30 seconds">-->
+<configuration>
+
+    <!--变量配置-->
+    <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+    <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] [%X{TRACE-ID}] %-5level %logger{50} - %msg%n" />
+    <!-- 定义日志存储的路径 和 日志名 -->
+    <property name="LOG_FILE_PATH" value="logs" />
+    <property name="LOG_FILE_NAME" value="typst2pdf" />
+
+
+    <!-- 控制台日志输出的Appender -->
+    <appender name="STDOUT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!--日志消息格式设置 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 输出文件Appender -->
+    <appender name="STDOUT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_PATH}${file.separator}${LOG_FILE_NAME}.log</file>
+        <!-- 拆分规则 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按照时间和压缩格式声明拆分的文件名 -->
+            <fileNamePattern>${LOG_FILE_PATH}${file.separator}%d{yyyy-MM-dd}${file.separator}${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--日志文件保留时长, 依据fileNamePattern表达为保留30天-->
+            <maxHistory>45</maxHistory>
+            <!--每个文件最多50MB，保留30天的历史记录，但最多10GB-->
+            <totalSizeCap>10GB</totalSizeCap>
+            <!--重启清理日志文件，按照现在的保留规则执行删除-->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <!-- 追加方式记录日志 -->
+        <append>true</append>
+        <!--  记录规则  -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 此日志文件只记录info级别以上的 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+
+    <logger name="org.springframework.aop.aspectj" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+<!--    <logger name="org.springframework.security" level="TRACE"/>-->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT_CONSOLE"/>
+        <appender-ref ref="STDOUT_FILE"/>
+    </root>
+</configuration>

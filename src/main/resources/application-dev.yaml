@@ -1,0 +1,21 @@
+server.port: 12307
+environment: dev
+spring:
+  application:
+    name: typst-pdf-dev
+
+# typst exec
+typst:
+  # typst存放的基础路径
+  base-folder: /Users/akio/Akio/open-source/generate-pdf-by-typst/tool/typst_ctl
+  # 运行文件环境地址 根据服务器类型修改为对应环境的可执行文件
+  # 0.10.0版本
+  exec-0.10.0: ${typst.base-folder}/typst-aarch64-apple-darwin/0.10.0/typst
+  # 0.13.0版本
+  exec-0.13.0: ${typst.base-folder}/typst-aarch64-apple-darwin/0.13.0/typst
+  # 模板文件地址
+  template-location: ${typst.base-folder}/typst_template
+  # typst临时文件转换 存放的位置
+  convert-folder: ${typst.base-folder}/convert
+  # maybe ttf
+  ttf: ${typst.base-folder}/ttf
