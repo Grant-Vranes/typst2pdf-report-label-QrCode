@@ -38,7 +38,7 @@
 
 ## 测试API用例
 
-使用apifox，提供apifox.json文件 [此处](./http_script/test.http)
+[此处](./http_script/test.http)
 
 ![image-20250316233123616](./README.assets/image-20250316233123616.png)  
 
